@@ -41,10 +41,10 @@ def encrypt():
     if request.method == 'GET':
         return form.format(rot_text='')
 
-    rot = int(request.form['rot'])
-    text = request.form['text']
+    rot = int(request.form.get('rot'))
+    text = request.form.get('text')
     encrypted_text = caesar.encrypt(text, rot)
     
-    return form.format(encrypted_text)    
+    return form.format(rot_text=encrypted_text)    
 
 app.run()
