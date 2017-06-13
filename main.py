@@ -30,25 +30,21 @@ form ="""
         <form action="/" method="post">
             <label>Rotate by:</label>
             <input name="rot" type="text" value="0" /><br>
-            <textarea name="text">{0}</textarea><br>
+            <textarea name="text">{rot_text}</textarea><br>
             <input type="submit" value="Submit query">
     </form>
     </body>
 </html>
 """
-@app.route("/", methods=['POST'])
+@app.route("/", methods=['POST', 'GET'])
 def encrypt():
-    
+    if request.method == 'GET':
+        return form.format(rot_text='')
+
     rot = int(request.form['rot'])
     text = request.form['text']
     encrypted_text = caesar.encrypt(text, rot)
     
     return form.format(encrypted_text)    
-
-@app.route("/")
-def index():
-    text = request.form['text']
-    
-    return form.format(text)
 
 app.run()
